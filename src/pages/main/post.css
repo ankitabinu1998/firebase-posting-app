@@ -14,7 +14,6 @@
     align-items: center;
 }
 .post-title {
-    color: #eae2b7;
     text-transform: uppercase;
     margin-bottom: 0;
     margin-top: 0;
@@ -23,10 +22,32 @@
 }
 .post-description {
     color: #fefae0;
+    font-size: 18px;
 }
 hr{
     border-top: 5px #93a065;
     width: 100%;
     border-style: solid;
+}
 
+.like-btn {
+    background-color: #6a9212;
+}
+
+.like-btn:hover {
+    background-color: #105f25;
+}
+
+.post-user-name {
+    font-size: 18px;
+    font-weight: 500;
+}
+
+p {
+    margin: 10px 0;
+}
+button:disabled, button[disabled=disabled] {
+    /* background-color: grey; */
+    pointer-events: none;
+    opacity: 0.3;
 }

@@ -17,6 +17,7 @@ button, .create-form-submit-btn {
   opacity: 1;
   outline: 0 solid transparent;
   padding: 8px 18px;
+  border: 3px solid;
 }
 button:hover, .create-form-submit-btn:hover {
   box-shadow: #68A691 0 10px 20px -10px;
