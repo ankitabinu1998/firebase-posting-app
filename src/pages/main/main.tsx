@@ -1,9 +1,10 @@
 import {collection, getDocs, query, where} from 'firebase/firestore';
-import {db} from '../../config/firebase';
+import {db , auth} from '../../config/firebase';
 import {useState,useEffect} from 'react';
 import {Post} from './post'
 import './post.css'
 import {Error} from '../error'
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface PostInt {
     title: "string",
@@ -16,6 +17,7 @@ interface PostInt {
 
 
 export const Main = () => {
+    const [user] = useAuthState(auth);
     const [postsList,setPostsList] = useState<PostInt[] | null>(null);
 
     const getPosts = async() => {
@@ -41,6 +43,7 @@ export const Main = () => {
     return (
         <>
          <h1>Home Page</h1>
+         {!user && <h4>Log in to see likes</h4>}
          <div className='post-list'>
             {postsList?.map((post:any)=>{
             return <Post post={post}/>

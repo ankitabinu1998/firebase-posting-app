@@ -34,6 +34,11 @@ hr{
     background-color: #6a9212;
     margin: 0 10px 0 0;
 }
+.liked-btn {
+    pointer-events: none;
+    background-color: #105f25;
+    margin: 0 10px 0 0;
+}
 
 .like-btn:hover {
     background-color: #105f25;
