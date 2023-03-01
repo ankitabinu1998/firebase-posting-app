@@ -18,12 +18,13 @@ export const NavBar = () => {
             <div className='nav-item'>
                 <Link to='/'>Home</Link>
                 {user ? <Link to='/createpost'>Create Post</Link> : <Link to='/login'>Login</Link> }
+                <Link to='*'>Error</Link>
             </div>
             <div className='nav-item'>
                 {user &&
                 <>
                     <p>{user?.displayName}</p>
-                    <img src={user?.photoURL || ''} alt='profile' width="30" height="30"/>
+                    <img className="profile-pic" src={user?.photoURL || ''} alt='profile' width="30" height="30"/>
                     <button onClick={signUserOut}>Log Out</button>
                 </>}
             </div>

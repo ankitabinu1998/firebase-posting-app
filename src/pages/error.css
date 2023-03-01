@@ -1,0 +1,22 @@
+.error-pic {
+    max-width: 60%;
+    height: auto;
+    margin-top: 10px;
+}
+.error-body {
+    position: relative;
+}
+.error-text {
+    position: absolute;
+    bottom: 30px;
+    right: 300px;
+    color: #E7EFC5;
+}
+
+.error-text > h1 {
+    font-size: 40px;
+}
+
+.error-text > h3 {
+    font-size: 30px;
+}
