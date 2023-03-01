@@ -3,8 +3,6 @@ import {db} from '../config/firebase';
 import {useState,useEffect} from 'react';
 import {Post} from './create-post/post'
 import './create-post/post.css'
-import { useContext } from 'react'
-import { ErrorContext } from '../App';
 import {Error} from './error'
 
 interface PostInt {
@@ -16,8 +14,6 @@ interface PostInt {
 }
 
 export const Main = () => {
-    const {errorMsg, setErrorMsg} = useContext(ErrorContext);
-    setErrorMsg('Something went wrong !');
     const [postsList,setPostsList] = useState<PostInt[] | null>(null);
 
     const getPosts = async() => {

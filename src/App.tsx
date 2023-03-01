@@ -6,22 +6,10 @@ import {Login} from './pages/login';
 import {NavBar} from './components/navbar';
 import {CreatePost} from './pages/create-post/createpost';
 import {Error} from './pages/error';
-import { useState} from 'react'
-
-interface ErrorInt {
-  errorMsg: string,
-  setErrorMsg: React.Dispatch<React.SetStateAction<string>>;
-}
-export const ErrorContext = React.createContext<ErrorInt>({
-  errorMsg: "",
-  setErrorMsg: () => {}
-});
 
 function App() {
-  const [errorMsg, setErrorMsg] = useState("We could not find that page!");
   return (
     <div className="App">
-      <ErrorContext.Provider value={{errorMsg,setErrorMsg}}>
       <Router>
         <NavBar/>
         <Routes>
@@ -31,8 +19,6 @@ function App() {
           <Route path='*' element={<Error/>}/>
         </Routes>
       </Router>
-      </ErrorContext.Provider>
-      <Outlet/>
     </div>
   );
 }

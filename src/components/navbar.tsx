@@ -18,7 +18,6 @@ export const NavBar = () => {
             <div className='nav-item'>
                 <Link to='/'>Home</Link>
                 {user ? <Link to='/createpost'>Create Post</Link> : <Link to='/login'>Login</Link> }
-                <Link to='*'>Error</Link>
             </div>
             <div className='nav-item'>
                 {user &&
