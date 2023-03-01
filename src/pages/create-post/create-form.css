@@ -1,0 +1,43 @@
+.error-msg {
+    color: #C44536;
+    margin-top: -10px;
+}
+.create-form-child {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 10px;
+}
+label {
+    margin-right: 10px;
+    font-weight: 600;
+}
+label::before {
+    content: '*';
+    color: #C44536;
+}
+.success-msg-text {
+    margin: 0;
+    padding: 20px;
+    background-color: #68A691;
+    color: white;
+    margin-bottom: 15px;
+}
+/* The close button */
+.closebtn {
+  margin-right: 10px;
+  color: white;
+  font-weight: bold;
+  float: right;
+  font-size: 22px;
+  cursor: pointer;
+  background-color: #68A691;
+  border: none;
+  padding: 0;
+}
+
+/* When moving the mouse over the close button */
+.closebtn:hover {
+  color: #04395E;
+  background-color: #68A691;
+}

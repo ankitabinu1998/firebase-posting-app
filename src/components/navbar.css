@@ -1,0 +1,29 @@
+.nav-bar {
+    background-color: #BFD7B5;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    font-weight: 700;
+}
+
+.nav-item {
+    display: flex;
+    align-items: center;
+}
+
+.nav-item > * {
+    margin: 0 10px;
+}
+
+img {
+    border-radius: 50%;
+}
+
+a{
+    color: #04395E;
+}
+
+a:hover{
+    color: #031D44;
+}
