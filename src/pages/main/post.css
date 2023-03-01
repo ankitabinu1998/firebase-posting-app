@@ -32,6 +32,7 @@ hr{
 
 .like-btn {
     background-color: #6a9212;
+    margin: 0 10px 0 0;
 }
 
 .like-btn:hover {
@@ -47,7 +48,11 @@ p {
     margin: 10px 0;
 }
 button:disabled, button[disabled=disabled] {
-    /* background-color: grey; */
     pointer-events: none;
     opacity: 0.3;
+}
+.like-btn-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
