@@ -1,9 +1,8 @@
-import {collection, getDocs, query, where} from 'firebase/firestore';
+import {collection, getDocs} from 'firebase/firestore';
 import {db , auth} from '../../config/firebase';
 import {useState,useEffect} from 'react';
 import {Post} from './post'
 import './post.css'
-import {Error} from '../error'
 import { useAuthState } from "react-firebase-hooks/auth";
 
 interface PostInt {
@@ -12,7 +11,6 @@ interface PostInt {
     id:"string",
     userName:"string",
     userId:"string",
-    count:"number"
 }
 
 
@@ -23,19 +21,11 @@ export const Main = () => {
     const getPosts = async() => {
         const data= await getDocs(collection(db, "posts"));
         let obj = {};
-        let postsArr = await Promise.all(data.docs.map(async (post)=>{
-            let count = await getLikes(post.id);
-            obj = {...post.data(), id: post.id, count: count} as unknown as PostInt;
+        let postsArr = data.docs.map( (post)=>{
+            obj = {...post.data(), id: post.id}  as PostInt;
             return obj;
-        }));
+        });
         setPostsList(postsArr as PostInt[]);
-    };
-
-
-    const getLikes = async(postId:string) => {
-        const q = query(collection(db,"likes"), where("postId","==",postId));
-        const LikeData= await getDocs(q);
-        return LikeData.size;
     };
 
     useEffect(()=>{getPosts()},[]);

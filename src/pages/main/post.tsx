@@ -1,42 +1,60 @@
-import {addDoc, collection, query, getDocs, where} from 'firebase/firestore'
+import {addDoc, collection, query, getDocs, where, deleteDoc, doc} from 'firebase/firestore'
 import {auth, db,} from '../../config/firebase'
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useState, useEffect } from 'react';
 
-interface LikeInt {
-    data: {
-        userWhoLikedId: string,
-        postId: string
-    },
-    count: "number"
+interface LikeDataSentToButton {
+    likeData:
+        {
+            userWhoLikedId: string,
+            postId: string
+        },
+    likeDocId: string
+}
+
+interface Like {
+    userWhoLikedId: string,
+    likeDocId: string
 }
 
 export const Post = (props:any) => {
     const [user] = useAuthState(auth);
-    let [likesCount, setLikesCount] = useState(props.post.count);
-    let [userLikedAlready,setUserLikedAlready] = useState(false);
+    const [like, setLike] = useState<Like[] | []>([]);
     const likesRef = collection(db,"likes");
-    const onLikePost = async (data:LikeInt) => {
-        const q = query(collection(db,"likes"), where("postId","==",data.data.postId), where("userWhoLikedId","==",user?.uid));
-        const LikeData= await getDocs(q);
-        if (LikeData.size >= 1) setUserLikedAlready(true);
-        if (!userLikedAlready) {
-            await addDoc(likesRef,{
-                ...data.data
-            });
-            let count = likesCount + 1;
-            setLikesCount(count);
-            setUserLikedAlready(true)
+    const userLikedAlready = like.find((element)=>element.userWhoLikedId === user?.uid);
+
+    const onLikePost = async (data:LikeDataSentToButton) => {
+        if (!userLikedAlready ) {
+            try{
+                const docRef =await addDoc(likesRef,{
+                    ...data.likeData
+                });
+                setLike((prev)=>[...prev,{userWhoLikedId:data.likeData.userWhoLikedId,likeDocId:docRef.id}])
+            } catch(e) {
+                console.log(e);
+            }
+        } else if (userLikedAlready) {
+            try {
+                const deleteDocRef = doc(db,"likes",userLikedAlready.likeDocId);
+                await deleteDoc(deleteDocRef);
+                setLike(like.filter(element => element.likeDocId !== userLikedAlready.likeDocId));
+            } catch (e) {
+                console.log(e);
+            }
         }
     }
-    const checkLikes = async () => {
-        const q = query(collection(db,"likes"), where("postId","==",props.post.id), where("userWhoLikedId","==",user?.uid));
-        const LikeData= await getDocs(q);
-        if (LikeData.size >= 1) setUserLikedAlready(true);
+
+    const getLikes = async () => {
+        const q = query(collection(db,"likes"), where("postId","==",props.post.id));
+        const LikeData= await (getDocs(q));
+        setLike(LikeData.docs.map((doc) => {
+            return {userWhoLikedId: doc.data().userWhoLikedId,
+                    likeDocId: doc.id};
+        }));
     }
 
     useEffect(()=>{
-        checkLikes();
+        getLikes();
     },[])
 
     return (
@@ -46,18 +64,17 @@ export const Post = (props:any) => {
             <p className="post-description">{props.post.description}</p>
             <p className="post-user-name">- {props.post.userName}</p>
             {user && <div className='like-btn-container'>
-                <button className={userLikedAlready ? "liked-btn" : "like-btn"} disabled={user.uid === props.post.userId} onClick={()=>
+                <button className={!userLikedAlready ? "like-btn" : "unlike-btn"} disabled={user.uid === props.post.userId} onClick={()=>
                     onLikePost(
                         {
-                            data: {
-                                userWhoLikedId: user?.uid,
-                                postId:props.post.id},
-                            count: props.post.count
+                            likeData:{userWhoLikedId: user?.uid,
+                            postId:props.post.id},
+                            likeDocId:props.post.id
                         }
                         )}>
-                    &#128077;
+                    {userLikedAlready ? <>👎</> : <>👍</>}
                 </button>
-                <p>{likesCount <= 1 ? `${likesCount} Like` : `${likesCount} Likes`}</p>
+                <p>{like.length <= 1 ? `${like.length} Like` : `${like.length} Likes`}</p>
                 </div>}
         </div>
     )
