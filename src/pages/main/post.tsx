@@ -38,6 +38,7 @@ export const Post = (props:any) => {
                 const deleteDocRef = doc(db,"likes",userLikedAlready.likeDocId);
                 await deleteDoc(deleteDocRef);
                 setLike(like.filter(element => element.likeDocId !== userLikedAlready.likeDocId));
+                // setLike(prev => prev.filter(element => element.likeDocId !== userLikedAlready.likeDocId));
             } catch (e) {
                 console.log(e);
             }
