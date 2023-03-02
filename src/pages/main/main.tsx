@@ -49,7 +49,6 @@ export const Main = () => {
             return <Post post={post}/>
          })}
          </div>
-         {!postsList && <Error msg='Something went wrong !'/>}
         </>
     )
 }
